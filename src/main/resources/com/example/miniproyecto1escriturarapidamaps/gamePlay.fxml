@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #021B1B;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.miniproyecto1escriturarapidamaps.controller.GamePlayController">
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="2.0" prefWidth="213.0">
+               <children>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="4.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/icons/keyboard.png" />
+                     </image>
+                     <effect>
+                        <Bloom threshold="0.0" />
+                     </effect>
+                  </ImageView>
+                  <Label layoutX="24.0" layoutY="2.0" prefHeight="27.0" prefWidth="291.0" text=" Fast Typing Arcade" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <font>
+                        <Font name="Impact" size="16.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.95260663507109" startY="0.8104265402843602">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.20392157137393951" green="0.9725490212440491" blue="0.9882352948188782" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.25">
+                                 <color>
+                                    <Color red="0.20579999685287476" green="0.9670966863632202" blue="0.9800000190734863" opacity="0.8100000023841858" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+               </children>
+            </Pane>
+            <VBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="124.0" style="-fx-border-color: #2dd3d6; -fx-border-radius: 5; -fx-border-width: 2;">
+               <children>
+                  <Label text="LEVEL" textAlignment="CENTER" textFill="#2dd3d6">
+                     <padding>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <font>
+                        <Font name="Bauhaus 93" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="levelLabel" text="3" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <textFill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.20392157137393951" green="0.9725490212440491" blue="0.9882352948188782" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.25">
+                                 <color>
+                                    <Color red="0.20579999685287476" green="0.9670966863632202" blue="0.9800000190734863" opacity="0.8100000023841858" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.1725490242242813" green="0.8313725590705872" blue="0.843137264251709" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </RadialGradient>
+                     </textFill>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <font>
+                        <Font name="Bauhaus 93" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="124.0" style="-fx-border-color: #2dd3d6; -fx-border-radius: 5; -fx-border-width: 2;">
+               <children>
+                  <Label alignment="TOP_CENTER" text="SCORE" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.95260663507109" startY="0.8104265402843602">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.20392157137393951" green="0.9725490212440491" blue="0.9882352948188782" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.25">
+                                 <color>
+                                    <Color red="0.20579999685287476" green="0.9670966863632202" blue="0.9800000190734863" opacity="0.8100000023841858" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.1725490242242813" green="0.8313725590705872" blue="0.843137264251709" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <font>
+                        <Font name="Bauhaus 93" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="scoreLabel" text="100" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <textFill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.20392157137393951" green="0.9725490212440491" blue="0.9882352948188782" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.25">
+                                 <color>
+                                    <Color red="0.20579999685287476" green="0.9670966863632202" blue="0.9800000190734863" opacity="0.8100000023841858" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.18039216101169586" green="0.9019607901573181" blue="0.9019607901573181" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </RadialGradient>
+                     </textFill>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <font>
+                        <Font name="Bauhaus 93" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="117.0" style="-fx-border-color: #2dd3d6; -fx-border-radius: 5; -fx-border-width: 2;">
+               <children>
+                  <Label text="Time" textAlignment="CENTER" textFill="#2dd3d6">
+                     <padding>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <font>
+                        <Font name="Bauhaus 93" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="timeLabel" text="50 seg" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <textFill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.20392157137393951" green="0.9725490212440491" blue="0.9882352948188782" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.25">
+                                 <color>
+                                    <Color red="0.20579999685287476" green="0.9670966863632202" blue="0.9800000190734863" opacity="0.8100000023841858" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.1725490242242813" green="0.8313725590705872" blue="0.843137264251709" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </RadialGradient>
+                     </textFill>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <font>
+                        <Font name="Bauhaus 93" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Label alignment="CENTER" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="10.0" left="5.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="212.0" prefWidth="580.0" style="-fx-background-color: #081b2f; -fx-border-color: #20e0e0; -fx-border-width: 2; -fx-border-radius: 5;">
+               <padding>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+               <children>
+                  <Label alignment="CENTER" layoutX="253.0" layoutY="31.0" text="CURRENT WORD" textFill="#2fd1d478">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="wordLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="67.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="308.0" style="-fx-text-fill: #2ee6e6; -fx-alignment: center;" text="CIBERPUNK" textAlignment="CENTER" textFill="#2ee6e6">
+                     <font>
+                        <Font name="Bauhaus 93" size="60.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="msnLabel" alignment="CENTER" layoutX="236.0" layoutY="163.0" text="CORRECT! LEVEL UP!" textFill="#2fd1d478" />
+               </children>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.21905457973480225" green="0.6996791958808899" blue="0.7631579041481018" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </AnchorPane>
+            <HBox alignment="CENTER" prefHeight="66.0" prefWidth="600.0" spacing="20.0">
+               <children>
+                  <TextField fx:id="textFieldBox" prefHeight="43.0" prefWidth="460.0" promptText="Type the word here..." style="-fx-background-color: #0a1f33; -fx-border-color: #2ee6e6; -fx-border-width: 2; -fx-border-radius: 5;" text="Type the word here...">
+                     <font>
+                        <Font name="Bauhaus 93" size="24.0" />
+                     </font></TextField>
+                  <Button fx:id="checkBtn" mnemonicParsing="false" onAction="#onHandleCheck" prefHeight="34.0" prefWidth="103.0" style="-fx-background-color: #2dd3d6; -fx-border-radius: 5; -fx-border-width: 2;" text="CHECK WORD" textFill="#1b1b1bcf">
+                     <font>
+                        <Font name="Bauhaus 93" size="12.0" />
+                     </font>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.9078947305679321" green="0.8952850699424744" blue="0.8952850699424744" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="26.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="BOTTOM_LEFT" prefHeight="12.0" prefWidth="184.0" text="Maps_2026" textFill="#2dd3d6">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" onMouseClicked="#handleRestartGame" prefHeight="14.0" prefWidth="372.0" text="RESTART" textAlignment="CENTER" textFill="#2dd3d6">
+               <font>
+                  <Font name="Bauhaus 93" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="20.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+         </children>
+      </HBox>
+   </bottom>
+   <effect>
+      <InnerShadow>
+         <color>
+            <Color red="0.1725490242242813" green="0.8313725590705872" blue="0.843137264251709" />
+         </color>
+      </InnerShadow>
+   </effect>
+</BorderPane>

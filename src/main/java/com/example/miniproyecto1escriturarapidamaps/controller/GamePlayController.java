@@ -13,7 +13,7 @@
  */
 package com.example.miniproyecto1escriturarapidamaps.controller;
 
-import com.example.miniproyecto1escriturarapidamaps.manager.AudioManager;
+import com.example.miniproyecto1escriturarapidamaps.managers.AudioManager;
 import com.example.miniproyecto1escriturarapidamaps.service.GameService;
 import com.example.miniproyecto1escriturarapidamaps.util.AnimationManager;
 import com.example.miniproyecto1escriturarapidamaps.model.WordGenerator;
@@ -55,10 +55,11 @@ public class GamePlayController {
     private Timeline timeline;
 
     /**
-     * Initializes the controller, sets up events, and starts the game.
+     * Initializes the controller, sets up UI events, and triggers initial animations.
      */
     @FXML
     public void initialize() {
+        // Visual and event configurations
         textFieldBox.setOnKeyPressed(new KeyboardHandler());
         AnimationManager.applyFadeScaleEntrance(mainBorderPane);
 
@@ -66,13 +67,15 @@ public class GamePlayController {
     }
 
     /**
-     * Resets service state and UI for a new game session.
+     * Resets the game state and starts a new session.
      */
     public void startGame() {
         gameService.resetGame();
         updateUI();
 
+        // Start background ambient music
         audioManager.playBackgroundMusic("/sounds/game.wav");
+
         nextWord();
         startTimer();
     }
@@ -125,7 +128,7 @@ public class GamePlayController {
     private void updateUI() {
         scoreLabel.setText("Score: " + gameService.getScore());
         levelLabel.setText("Level: " + gameService.getLevel());
-        timeLabel.setText(gameService.getTimeLeft() + " seg");
+        timeLabel.setText(gameService.getTimeLeft() + " sec");
     }
 
     /**
@@ -138,18 +141,20 @@ public class GamePlayController {
         timeline.play();
     }
 
+    /**
+     * Stops the game and transitions to the Game Over screen.
+     */
     public void goToGameOver() {
         try {
             if (timeline != null) timeline.stop();
             audioManager.stopBackgroundMusic();
+            audioManager.playEffect("/sounds/gameover.wav");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/miniproyecto1escriturarapidamaps/gameOver.fxml"));
             Parent root = loader.load();
 
             GameOverController controller = loader.getController();
             controller.setResults(gameService.getLevel(), gameService.getScore(), gameService.getTotalWordsCorrect());
-
-            audioManager.playEffect("/sounds/gameover.wav");
 
             Stage stage = (Stage) wordLabel.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -160,17 +165,29 @@ public class GamePlayController {
 
     // --- Inner Handlers ---
 
+    /**
+     * Handles the countdown logic every second.
+     */
     private class TimerHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
             int time = gameService.getTimeLeft() - 1;
             gameService.setTimeLeft(time);
-            timeLabel.setText(time + " seg");
+            timeLabel.setText(time + " sec");
 
-            // Visual feedback for low time
-            if (time <= 5) timeLabel.setStyle("-fx-text-fill: red;");
-            else if (time <= 10) timeLabel.setStyle("-fx-text-fill: yellow;");
-            else timeLabel.setStyle("-fx-text-fill: #2ee6e6;");
+            // Feedback when time is running out
+            if (time <= 5 && time > 0) {
+                timeLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                audioManager.playEffect("/sounds/warning.wav");
+                AnimationManager.playCorrectAnimation(timeLabel);
+            }
+            else if (time <= 10) {
+                timeLabel.setStyle("-fx-text-fill: yellow;");
+                AnimationManager.playCorrectAnimation(timeLabel);
+            }
+            else {
+                timeLabel.setStyle("-fx-text-fill: #2ee6e6;");
+            }
 
             if (time <= 0) {
                 timeline.stop();
@@ -179,6 +196,9 @@ public class GamePlayController {
         }
     }
 
+    /**
+     * Handles keyboard events for the text field.
+     */
     private class KeyboardHandler implements EventHandler<KeyEvent> {
         @Override
         public void handle(KeyEvent event) {

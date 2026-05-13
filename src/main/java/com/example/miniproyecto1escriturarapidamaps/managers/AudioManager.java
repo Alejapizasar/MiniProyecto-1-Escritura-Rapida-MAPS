@@ -1,4 +1,4 @@
-package com.example.miniproyecto1escriturarapidamaps.manager;
+package com.example.miniproyecto1escriturarapidamaps.managers;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;

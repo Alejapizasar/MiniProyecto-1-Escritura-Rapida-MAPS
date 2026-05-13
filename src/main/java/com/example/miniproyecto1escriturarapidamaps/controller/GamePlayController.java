@@ -12,6 +12,7 @@
  * @version 1.0
  */
 package com.example.miniproyecto1escriturarapidamaps.controller;
+
 import com.example.miniproyecto1escriturarapidamaps.events.GameEventAdapter;
 import com.example.miniproyecto1escriturarapidamaps.model.GameModel;
 import com.example.miniproyecto1escriturarapidamaps.model.WordGenerator;
@@ -27,6 +28,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 
 public class GamePlayController {
@@ -38,10 +41,16 @@ public class GamePlayController {
     @FXML private TextField textFieldBox;
     @FXML private Label scoreLabel;
 
+    private MediaPlayer correctSound;
+    private MediaPlayer wrongSound;
+    private MediaPlayer gameOverSound;
+
     private GameModel model = new GameModel();
     private WordGenerator wordGenerator = new WordGenerator();
     private String currentWord;
     private Timeline timeline;
+
+    private MediaPlayer backgroundMusicPlayer;
 
     private int timeLeft;
     private int score = 0;
@@ -50,8 +59,7 @@ public class GamePlayController {
     private GameHandler gameHandler = new GameHandler();
 
     /**
-     * Inner class responsible for
-     * handling timer events.
+     * Inner class responsible for handling timer events.
      */
     private class TimerHandler implements EventHandler<ActionEvent> {
 
@@ -80,8 +88,7 @@ public class GamePlayController {
         }
     }
     /**
-     * Inner class responsible for
-     * handling keyboard events.
+     * Inner class responsible for handling keyboard events.
      */
     private class KeyboardHandler implements EventHandler<KeyEvent> {
 
@@ -95,8 +102,7 @@ public class GamePlayController {
         }
     }
     /**
-     * Inner class that extends
-     * GameEventAdapter to manage
+     * Inner class that extends GameEventAdapter to manage
      * custom gameplay events.
      */
     private class GameHandler extends GameEventAdapter {
@@ -115,7 +121,7 @@ public class GamePlayController {
 
         @Override
         public void onTimeFinished() {
-
+            playSound(gameOverSound);
             goToGameOver();
         }
     }
@@ -129,7 +135,31 @@ public class GamePlayController {
     public void initialize() {
         textFieldBox.setOnKeyPressed(new KeyboardHandler());
         startGame();
+        // Pre-load sounds to avoid lag
+        correctSound = createMediaPlayer("/sounds/correct.wav");
+        wrongSound = createMediaPlayer("/sounds/wrong.wav");
+        gameOverSound = createMediaPlayer("/sounds/gameover.wav");
+
+        textFieldBox.setOnKeyPressed(new KeyboardHandler());
+        startGame();
     }
+
+    /**
+     * Helper method to create a MediaPlayer and pre-load the resource.
+     */
+    private MediaPlayer createMediaPlayer(String path) {
+        try {
+            var resource = getClass().getResource(path);
+            if (resource != null) {
+                return new MediaPlayer(new Media(resource.toExternalForm()));
+            }
+            System.err.println("Resource not found during pre-load: " + path);
+        } catch (Exception e) {
+            System.err.println("Error pre-loading: " + path);
+        }
+        return null;
+    }
+
 
     /**
      * Restarts the game from the beginning.
@@ -142,8 +172,6 @@ public class GamePlayController {
         startGame();
     }
     /**
-     * Starts a new game and resets
-     * score, timer, and level data.
      * Starts a new game and resets
      * score, timer, and level data.
      */
@@ -159,11 +187,11 @@ public class GamePlayController {
 
         nextWord();
         startTimer();
+        playBackgroundMusic("/sounds/game.wav");
     }
 
     /**
-     * Generates and displays
-     * the next word for the player.
+     * Generates and displays the next word for the player.
      */
     public void nextWord() {
         boolean useHardWords = model.getLevel() > 3;
@@ -201,6 +229,7 @@ public class GamePlayController {
             gameHandler.onCorrectWord();
             msnLabel.setText("¡Correct! (" + wordsClearedInCurrentLevel + "/5)");
             msnLabel.setStyle("-fx-text-fill: #00ff00;");
+            playSound(correctSound);
 
             ScaleTransition scale = new ScaleTransition(Duration.millis(200), wordLabel);
 
@@ -225,6 +254,7 @@ public class GamePlayController {
             gameHandler.onWrongWord();
             msnLabel.setText("¡Wrong! Try Again!");
             msnLabel.setStyle("-fx-text-fill: #ff0000;");
+            playSound(wrongSound);
             TranslateTransition shake = new TranslateTransition(Duration.millis(60), textFieldBox);
 
             shake.setByX(10);
@@ -254,17 +284,58 @@ public class GamePlayController {
     public void goToGameOver() {
         try {
             if (timeline != null) timeline.stop();
+            if (backgroundMusicPlayer != null) {
+                backgroundMusicPlayer.stop();
+            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/miniproyecto1escriturarapidamaps/gameOver.fxml"));
             Parent root = loader.load();
             GameOverController controller = loader.getController();
             controller.setResults(model.getLevel(), score, totalWordsCorrect);
+            playSound(gameOverSound);
+
             Stage stage = (Stage) wordLabel.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    /**
+     * Plays a sound effect using a pre-loaded MediaPlayer.
+     * Stops the player before playing to ensure the sound starts from the beginning.
+     * @param player the MediaPlayer object to play
+     */
+    private void playSound(MediaPlayer player) {
+        if (player != null) {
+            player.stop(); // This rewinds the sound if it's already playing
+            player.play();
+        }
+    }
 
+    /**
+     * Plays background music in an infinite loop.
+     * Stops any previous background music before starting the new one.
+     * @param soundFile absolute path of the music file in the resources folder
+     */
+    private void playBackgroundMusic(String soundFile) {
+        try {
+            if (backgroundMusicPlayer != null) {
+                backgroundMusicPlayer.stop();
+            }
+
+            var resource = getClass().getResource(soundFile);
+            if (resource != null) {
+                Media media = new Media(resource.toExternalForm());
+                backgroundMusicPlayer = new MediaPlayer(media);
+                backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                backgroundMusicPlayer.play();
+            } else {
+                System.err.println("Background music resource not found: " + soundFile);
+            }
+        } catch (Exception e) {
+            System.err.println("Error playing background music: " + e.getMessage());
+        }
+    }
     @FXML void onHandleCheck() { validateWord(); }
 }

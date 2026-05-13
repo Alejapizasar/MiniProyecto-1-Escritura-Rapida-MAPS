@@ -5,65 +5,68 @@
  * and timer configuration.
  * @author Maria Alejandra Pizarro Sarria
  * @version 1.0
- */package com.example.miniproyecto1escriturarapidamaps.model;
+ */
+package com.example.miniproyecto1escriturarapidamaps.model;
 import com.example.miniproyecto1escriturarapidamaps.model.interfaces.IScore;
 import com.example.miniproyecto1escriturarapidamaps.model.interfaces.ITime;
 
 /**
- * Represents the game state and logic.
+ * Represents the game model and stores
+ * the current level and available time.
  */
-public class GameModel implements IScore, ITime {
-
-    // Current player level
-    private int level;
-
-    // Base game time
-    private int baseTime = 20;
+public class GameModel {
 
     /**
-     * Constructor.
-     * Initializes game values.
+     * Current level of the player.
      */
-    public GameModel() {
-        level = 1;
-    }
+    private int level = 1;
 
     /**
-     * Returns current level.
+     * Available time for the current level.
+     */
+    private int time = 20;
+
+    /**
+     * Returns the current game level.
+     *
      * @return current level
      */
-    @Override
     public int getLevel() {
         return level;
     }
 
     /**
-     * Returns current game time.
-     * Every 5 levels time decreases by 2 seconds.
-     * Minimum time is 2 seconds.
-     * @return current available time
+     * Returns the current available time.
+     *
+     * @return current time in seconds
      */
-    @Override
     public int getTime() {
-
-        int reduction = (level / 5) * 2;
-
-        int currentTime = baseTime - reduction;
-
-        return Math.max(currentTime, 2);
+        return time;
     }
 
     /**
-     * Increases player level.
+     * Increases the game level.
+     * Every 5 levels, the available
+     * time decreases by 2 seconds
+     * until reaching a minimum of 2 seconds.
      */
     public void increaseLevel() {
+
         level++;
+
+        if(level % 5 == 0 && time > 2){
+
+            time -= 2;
+        }
     }
 
     /**
-     * Resets game values.
+     * Resets the game values
+     * to their default state.
      */
-    public void reset() {
+    public void reset(){
+
         level = 1;
+        time = 20;
     }
 }

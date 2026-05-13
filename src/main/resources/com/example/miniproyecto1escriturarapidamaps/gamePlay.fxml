@@ -21,7 +21,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #021B1B;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.miniproyecto1escriturarapidamaps.controller.GamePlayController">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #021B1B;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.miniproyecto1escriturarapidamaps.controller.GamePlayController">
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
@@ -285,9 +285,9 @@
                         <Font size="10.0" />
                      </font>
                   </Label>
-                  <Label fx:id="wordLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="67.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" style="-fx-text-fill: #2ee6e6; -fx-alignment: center;" text="CIBERPUNK" textAlignment="CENTER" textFill="#2ee6e6">
+                  <Label fx:id="wordLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="67.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" style="-fx-text-fill: #2ee6e6; -fx-alignment: center;" text="CIBERPUNK" textFill="#2ee6e6">
                      <font>
-                        <Font name="Bauhaus 93" size="55.0" />
+                        <Font name="Bauhaus 93" size="58.0" />
                      </font>
                   </Label>
                   <Label fx:id="msnLabel" alignment="CENTER" layoutX="236.0" layoutY="163.0" text="CORRECT! LEVEL UP!" textFill="#2fd1d478" />
@@ -302,7 +302,7 @@
             </AnchorPane>
             <HBox alignment="CENTER" prefHeight="66.0" prefWidth="600.0" spacing="20.0">
                <children>
-                  <TextField fx:id="textFieldBox" prefHeight="43.0" prefWidth="460.0" promptText="Type the word here..." style="-fx-background-color: #0a1f33; -fx-border-color: #2ee6e6; -fx-border-width: 2; -fx-border-radius: 5;" text="Type the word here...">
+                  <TextField fx:id="textFieldBox" alignment="TOP_CENTER" prefHeight="43.0" prefWidth="460.0" promptText="Type the word here..." style="-fx-background-color: #0a1f33; -fx-border-color: #2ee6e6; -fx-border-width: 2; -fx-border-radius: 5;" text="Type the word here...">
                      <font>
                         <Font name="Bauhaus 93" size="24.0" />
                      </font></TextField>

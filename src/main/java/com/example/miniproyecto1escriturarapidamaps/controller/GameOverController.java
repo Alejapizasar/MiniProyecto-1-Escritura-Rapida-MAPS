@@ -1,11 +1,12 @@
 /**
- * Controls the Game Over screen
- * and displays final results.
- *
+ * Controller class for the Game Over screen.
+ * This class handles the display of final statistics and navigation
+ * back to the game or the main menu.
  * @author Maria Alejandra Pizarro Sarria
  * @version 1.0
  */
 package com.example.miniproyecto1escriturarapidamaps.controller;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,8 +29,8 @@ public class GameOverController {
     @FXML private Label exitBtn;
 
     /**
-     * Initializes hover effects
-     * for the Game Over menu.
+     * Initializes the controller by setting up visual effects.
+     * This method is automatically called after the FXML file has been loaded.
      */
     @FXML
     public void initialize() {
@@ -40,7 +41,12 @@ public class GameOverController {
 
         addHoverEffect(exitBtn);
     }
-
+    /**
+     * Adds a scaling hover effect to a JavaFX control.
+     * When the mouse enters the control area, it scales up; when it exits, it returns to normal size.
+     *
+     * @param control The JavaFX control (Button, Label, etc.) to apply the effect to.
+     */
     private void addHoverEffect(Control control) {
 
         if(control == null) return;
@@ -59,11 +65,11 @@ public class GameOverController {
     }
 
     /**
-     * Displays the final results
-     * of the completed game.
-     * @param level final level reached
-     * @param finalScore final score obtained
-     * @param totalWords total correct words
+     * Sets and displays the final performance metrics of the game session.
+     *
+     * @param level The final level reached by the player.
+     * @param finalScore The total score accumulated during the session.
+     * @param totalWords The total count of correctly typed words.
      */
     public void setResults(int level, int finalScore, int totalWords) {
         levelLabel.setText(String.valueOf(level));
@@ -72,8 +78,9 @@ public class GameOverController {
     }
 
     /**
-     * Restarts the game.
-     * @param event button click event
+     * Transitions the scene back to the gameplay screen to start a new match.
+     *
+     * @param event The ActionEvent triggered by clicking the restart button.
      */
     @FXML
     void handleRestart(ActionEvent event) {
@@ -87,8 +94,9 @@ public class GameOverController {
         }
     }
     /**
-     * Returns to the main menu.
-     * @param event button click event
+     * Transitions the scene back to the main menu screen.
+     *
+     * @param event The ActionEvent triggered by clicking the menu button.
      */
     @FXML
     void handleMenu(ActionEvent event) {
@@ -102,7 +110,7 @@ public class GameOverController {
         }
     }
     /**
-     * Closes the application completely.
+     * Terminates the application execution.
      */
     @FXML
     void handleExit() {

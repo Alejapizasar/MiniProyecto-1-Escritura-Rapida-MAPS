@@ -38,7 +38,8 @@ import java.io.IOException;
 
 /**
  * Main controller for the gameplay screen.
- * Orchestrates the UI updates by delegating logic to Service, Manager, and Utility classes.
+ * Orchestrates the UI updates and user interactions by delegating business logic
+ * to Service, Manager, and Utility classes.
  */
 public class GamePlayController {
 
@@ -46,7 +47,7 @@ public class GamePlayController {
     @FXML private TextField textFieldBox;
     @FXML private BorderPane mainBorderPane;
 
-    // Orchestrators
+    // Core logic and resource orchestrators
     private final GameService gameService = new GameService();
     private final AudioManager audioManager = new AudioManager();
     private final WordGenerator wordGenerator = new WordGenerator();
@@ -55,7 +56,8 @@ public class GamePlayController {
     private Timeline timeline;
 
     /**
-     * Initializes the controller, sets up UI events, and triggers initial animations.
+     * Initializes the controller, sets up keyboard event listeners,
+     * and triggers initial UI entrance animations.
      */
     @FXML
     public void initialize() {
@@ -67,7 +69,8 @@ public class GamePlayController {
     }
 
     /**
-     * Resets the game state and starts a new session.
+     * Resets the game service state and prepares the UI for a new play session.
+     * Starts background music and initializes the first word and timer.
      */
     public void startGame() {
         gameService.resetGame();
@@ -81,7 +84,8 @@ public class GamePlayController {
     }
 
     /**
-     * Generates a new word based on current level difficulty.
+     * Fetches a new word from the generator based on the current level difficulty
+     * and updates the display label.
      */
     private void nextWord() {
         boolean useHardWords = gameService.getLevel() > 3;
@@ -89,9 +93,10 @@ public class GamePlayController {
         wordLabel.setText(currentWord);
         textFieldBox.clear();
     }
-
     /**
-     * Validates user input and triggers corresponding animations/sounds.
+     * Compares the user input with the target word.
+     * Triggers success or error feedback (sounds, animations, messages)
+     * and checks for level progression.
      */
     private void validateWord() {
         String input = textFieldBox.getText();
@@ -117,22 +122,26 @@ public class GamePlayController {
         }
         updateUI();
     }
-
+    /**
+     * Advances the player to the next level, refreshes the UI,
+     * and restarts the countdown timer.
+     */
     private void levelUp() {
         gameService.levelUp();
         updateUI();
         nextWord();
         startTimer();
     }
-
+    /**
+     * Synchronizes the UI labels with the current data stored in the GameService.
+     */
     private void updateUI() {
         scoreLabel.setText("Score: " + gameService.getScore());
         levelLabel.setText("Level: " + gameService.getLevel());
         timeLabel.setText(gameService.getTimeLeft() + " sec");
     }
-
     /**
-     * Sets up and starts the countdown timeline.
+     * Configures and starts the JavaFX Timeline responsible for the game's countdown.
      */
     private void startTimer() {
         if (timeline != null) timeline.stop();
@@ -142,7 +151,8 @@ public class GamePlayController {
     }
 
     /**
-     * Stops the game and transitions to the Game Over screen.
+     * Terminates the current game session, stops all audio/timers,
+     * and transitions the scene to the Game Over view.
      */
     public void goToGameOver() {
         try {
@@ -166,7 +176,8 @@ public class GamePlayController {
     // --- Inner Handlers ---
 
     /**
-     * Handles the countdown logic every second.
+     * Inner class to handle the tick logic of the game timer.
+     * Updates remaining time and provides visual/auditory warnings.
      */
     private class TimerHandler implements EventHandler<ActionEvent> {
         @Override
@@ -175,7 +186,7 @@ public class GamePlayController {
             gameService.setTimeLeft(time);
             timeLabel.setText(time + " sec");
 
-            // Feedback when time is running out
+            // Critical time warnings (5 seconds or less)
             if (time <= 5 && time > 0) {
                 timeLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
                 audioManager.playEffect("/sounds/warning.wav");
@@ -195,9 +206,9 @@ public class GamePlayController {
             }
         }
     }
-
     /**
-     * Handles keyboard events for the text field.
+     * Inner class to handle keyboard input within the TextField.
+     * Specifically listens for the ENTER key to trigger word validation.
      */
     private class KeyboardHandler implements EventHandler<KeyEvent> {
         @Override
@@ -207,7 +218,12 @@ public class GamePlayController {
             }
         }
     }
-
+    /**
+     * Event handler for the manual check button.
+     */
     @FXML void onHandleCheck() { validateWord(); }
+    /**
+     * Event handler to restart the game session manually.
+     */
     @FXML void handleRestartGame() { startGame(); }
 }

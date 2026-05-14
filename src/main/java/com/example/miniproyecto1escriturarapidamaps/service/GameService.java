@@ -1,3 +1,14 @@
+/**
+ * Service class that orchestrates the core gameplay mechanics, scoring rules,
+ * and state transitions.
+ *
+ * This class acts as a bridge between the data {@link GameModel} and the
+ * UI Controllers, ensuring that business logic is decoupled from the
+ * presentation layer.
+ *@author Maria Alejandra Pizarro Sarria
+ * @version 1.0
+ */
+
 package com.example.miniproyecto1escriturarapidamaps.service;
 
 import com.example.miniproyecto1escriturarapidamaps.model.GameModel;
@@ -7,14 +18,35 @@ import com.example.miniproyecto1escriturarapidamaps.model.GameModel;
  * It separates the business logic from the UI controller.
  */
 public class GameService {
+    /**
+     * Internal reference to the game data model.
+     */
     private GameModel model = new GameModel();
+
+    /**
+     * The player's cumulative score during the current session.
+     */
     private int score = 0;
+
+    /**
+     * Total count of words correctly typed across all levels.
+     */
     private int totalWordsCorrect = 0;
+
+    /**
+     * Counter for words correctly typed specifically within the active level.
+     * Used to determine progression requirements.
+     */
     private int wordsClearedInCurrentLevel = 0;
+
+    /**
+     * The dynamic countdown value in seconds for the current level.
+     */
     private int timeLeft;
 
     /**
-     * Resets all game statistics and initializes the timer based on the model.
+     * Resets all session-based statistics and restores the {@link GameModel}
+     * to its starting configuration.
      */
     public void resetGame() {
         score = 0;
@@ -25,34 +57,43 @@ public class GameService {
     }
 
     /**
-     * Validates the player's input against the target word and updates the score.
-     * @param input The text entered by the user.
-     * @param target The correct word to be matched.
-     * @return true if the words match (ignoring case), false otherwise.
+     * Evaluates a user's input against a target word.
+     * Applies scoring rewards for success or penalties for failure, and
+     * manages time bonuses.
+     *
+     * @param input  The string entered by the player.
+     * @param target The expected correct string.
+     * @return {@code true} if the input matches (case-insensitive);
+     *         {@code false} otherwise.
      */
     public boolean processWord(String input, String target) {
         if (input.equalsIgnoreCase(target)) {
             score += 100;
             totalWordsCorrect++;
             wordsClearedInCurrentLevel++;
-            timeLeft += 2; // Bonus time for correct answer
+            timeLeft += 2; // Success bonus to keep the game alive
             return true;
         } else {
-            score = Math.max(0, score - 50); // Prevents negative scores
+            // Apply penalty without letting the score drop below zero
+            score = Math.max(0, score - 50);
             return false;
         }
     }
 
     /**
-     * Checks if the player has cleared enough words to progress to the next level.
-     * @return true if 5 or more words have been cleared in the current level.
+     * Determines if the player has met the requirements to advance.
+     *
+     * @return {@code true} if 5 or more words have been successfully
+     *         cleared in the current level.
      */
     public boolean shouldLevelUp() {
         return wordsClearedInCurrentLevel >= 5;
     }
 
     /**
-     * Advances the game to the next level and resets the level-specific counter.
+     * Transitions the game state to the next difficulty tier.
+     * Increases the level in the model, resets the level-specific counter,
+     * and refreshes the timer.
      */
     public void levelUp() {
         model.increaseLevel();
@@ -61,42 +102,47 @@ public class GameService {
     }
 
     /**
-     * @return The current total score.
+     * Retrieves the current session score.
+     * @return Total points accumulated.
      */
     public int getScore() {
         return score;
     }
 
     /**
-     * @return The remaining time in seconds.
+     * Retrieves the current countdown value.
+     * @return Seconds remaining before game over.
      */
     public int getTimeLeft() {
         return timeLeft;
     }
 
     /**
-     * @return The current game level from the model.
+     * Retrieves the current difficulty level from the model.
+     * @return The active level number.
      */
     public int getLevel() {
         return model.getLevel();
     }
 
     /**
-     * @return The total number of correct words throughout the session.
+     * Retrieves the total volume of correctly typed words.
+     * @return Overall successful attempts.
      */
     public int getTotalWordsCorrect() {
         return totalWordsCorrect;
     }
 
     /**
-     * @return The number of words correctly typed in the current level.
+     * Retrieves the progress within the current level.
+     * @return Successful attempts in the current level.
      */
     public int getWordsInLevel() {
         return wordsClearedInCurrentLevel;
     }
 
     /**
-     * Updates the remaining time. Usually called by the game's Timeline.
+     * Updates the remaining time based on external triggers (e.g., Timeline).
      * @param timeLeft The new time value in seconds.
      */
     public void setTimeLeft(int timeLeft) {
